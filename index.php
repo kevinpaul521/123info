@@ -138,7 +138,7 @@
     }
 
     function goToOffer() {
-      window.location.href = "YOUR_AFFILIATE_LINK";
+      window.location.href = "https://www.temu.com";
     }
   </script>
 
